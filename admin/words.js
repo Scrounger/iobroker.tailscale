@@ -145,6 +145,30 @@ const dictionary = {
 		"es": "Documentaciones",
 		"pl": "Dokumentacja",
 		"zh-cn": "文档"
+	},
+	"donation": {
+		"en": "You like the adapter? Then support the adapter developer (Scrounger) with a small donation.",
+		"de": "Dir gefällt der Adapter? Dann unterstütze den Adapterentwickler (Scrounger) mit einer kleinen Spende.",
+		"ru": "Вам нравится адаптер? Затем поддержите разработчика адаптера (Scrounger) с небольшим пожертвованием.",
+		"pt": "Você gosta do adaptador? Depois, ofereça suporte ao desenvolvedor do adaptador (Scrounger) com uma pequena doação.",
+		"nl": "Vind je de adapter leuk? Ondersteun vervolgens de adapterontwikkelaar (Scrounger) met een kleine donatie.",
+		"fr": "Vous aimez l'adaptateur? Soutenez ensuite le développeur de l'adaptateur (Scrounger) avec un petit don.",
+		"it": "Ti piace l'adattatore? Quindi supportare lo sviluppatore dell'adattatore (Scrounger) con una piccola donazione.",
+		"es": "¿Te gusta el adaptador? Luego, apoye al desarrollador del adaptador (Scrounger) con una pequeña donación.",
+		"pl": "Podoba ci się adapter? Następnie wesprzyj programistę adaptera (Scrounger) niewielką darowizną.",
+		"zh-cn": "您喜欢适配器吗？然后以少量捐款支持适配器开发人员（Scrounger）。"
+	},
+	"channel name": {
+		"en": "channel name",
+		"de": "Kanal Name",
+		"ru": "Название канала",
+		"pt": "nome do canal",
+		"nl": "kanaal naam",
+		"fr": "nom du canal",
+		"it": "nome del canale",
+		"es": "Nombre del Canal",
+		"pl": "Nazwa kanału",
+		"zh-cn": "频道名称"
 	}
 };
 

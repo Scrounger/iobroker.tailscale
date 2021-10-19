@@ -34,8 +34,6 @@ class Tailscale extends utils.Adapter {
 		// this.on('message', this.onMessage.bind(this));
 		this.on('unload', this.onUnload.bind(this));
 
-		this.isAdapterStart = false;
-
 		this.endPoints = {
 			devices: "devices",
 		}
@@ -48,11 +46,7 @@ class Tailscale extends utils.Adapter {
 		try {
 			await this.prepareTranslation();
 
-			this.isAdapterStart = true;
-
 			await Promise.allSettled(this.config.accounts.map((account) => this.refreshAccount(account)));
-
-			this.isAdapterStart = false;
 
 		} catch (err) {
 			this.log.error(`[onReady] error: ${err.message}, stack: ${err.stack}`);
@@ -80,11 +74,12 @@ class Tailscale extends utils.Adapter {
 		let logPrefix = `[refreshAccount] [${account.user}]`
 		try {
 			if (account.enabled) {
-				this.log.info(`${logPrefix} getting data from tailscale api${this.isAdapterStart ? '( Adapter restart)' : ''}`);
+				this.log.info(`${logPrefix} getting data from tailscale api`);
 
 				for (const [key, endpoint] of Object.entries(this.endPoints)) {
 					await this.refreshEndpoints(account, endpoint);
 				}
+
 
 				if (requestInterval) requestInterval = null;
 
@@ -213,29 +208,22 @@ class Tailscale extends utils.Adapter {
 	 * @param {string } val
 	 */
 	async createObjectString(id, name, val) {
-		if (this.isAdapterStart) {
-			let obj = await this.getObjectAsync(id);
+		let obj = await this.getObjectAsync(id);
 
-			if (obj) {
-				if (obj.common.name !== _(name)) {
-					obj.common.name = _(name);
-					await this.setObjectAsync(id, obj);
-				}
-			} else {
-				await this.setObjectNotExistsAsync(id,
-					{
-						type: 'state',
-						common: {
-							name: _(name),
-							desc: _(name),
-							type: 'string',
-							read: true,
-							write: false,
-							role: 'state'
-						},
-						native: {}
-					});
-			}
+		if (!obj) {
+			await this.setObjectNotExistsAsync(id,
+				{
+					type: 'state',
+					common: {
+						name: _(name),
+						desc: _(name),
+						type: 'string',
+						read: true,
+						write: false,
+						role: 'state'
+					},
+					native: {}
+				});
 		}
 		await this.setStateAsync(id, val, true);
 	}
@@ -246,29 +234,22 @@ class Tailscale extends utils.Adapter {
 	 * @param {boolean} val
 	 */
 	async createObjectBoolean(id, name, val) {
-		if (this.isAdapterStart) {
-			let obj = await this.getObjectAsync(id);
+		let obj = await this.getObjectAsync(id);
 
-			if (obj) {
-				if (obj.common.name !== _(name)) {
-					obj.common.name = _(name);
-					await this.setObjectAsync(id, obj);
-				}
-			} else {
-				await this.setObjectNotExistsAsync(id,
-					{
-						type: 'state',
-						common: {
-							name: _(name),
-							type: 'boolean',
-							read: true,
-							write: false,
-							role: 'indicator',
-							def: false
-						},
-						native: {}
-					});
-			}
+		if (!obj) {
+			await this.setObjectNotExistsAsync(id,
+				{
+					type: 'state',
+					common: {
+						name: _(name),
+						type: 'boolean',
+						read: true,
+						write: false,
+						role: 'indicator',
+						def: false
+					},
+					native: {}
+				});
 		}
 		await this.setStateAsync(id, val, true);
 	}
