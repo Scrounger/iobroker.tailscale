@@ -1,0 +1,77 @@
+{
+	"common": {
+		"name": "tailscale",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "Tailscale API",
+		"titleLang": {
+			"en": "Tailscale API",
+			"de": "Tailscale API",
+			"ru": "Tailscale API",
+			"pt": "API Tailscale",
+			"nl": "Tailscale API",
+			"fr": "API à grande échelle",
+			"it": "API della scala di coda",
+			"es": "API de escala de cola",
+			"pl": "API skali ogonowej",
+			"zh-cn": "尾标API"
+		},
+		"desc": {
+			"en": "Tailscale API access",
+			"de": "Tailscale API-Zugriff",
+			"ru": "Доступ к Tailscale API",
+			"pt": "Acesso à API Tailscale",
+			"nl": "Tailscale API-toegang",
+			"fr": "Accès à l'API Tailscale",
+			"it": "Accesso all'API tailscale",
+			"es": "Acceso a la API de Tailscale",
+			"pl": "Dostęp do API skali ogonowej",
+			"zh-cn": "尾标 API 访问"
+		},
+		"authors": [
+			"Scrounger <scrounger@gmx.net>"
+		],
+		"keywords": [
+			"tailscale",
+			"api",
+			"vpn"
+		],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "tailscale.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/Scrounger/ioBroker.tailscale/main/admin/tailscale.png",
+		"readme": "https://github.com/Scrounger/ioBroker.tailscale/blob/main/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "network",
+		"compact": true,
+		"connectionType": "cloud",
+		"dataSource": "poll",
+		"materialize": true,
+		"dependencies": [
+			{
+				"js-controller": ">=2.0.0"
+			}
+		]
+	},
+	"native": {
+		"accounts": []		
+	},
+	"objects": [],
+	"instanceObjects": []
+}

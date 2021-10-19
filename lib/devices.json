@@ -1,0 +1,84 @@
+{
+    "addresses": [
+        {
+            "id": "IPv4",
+            "name": "IPv4",
+            "type": "string"
+        },
+        {
+            "id": "IPv6",
+            "name": "IPv6",
+            "type": "string"
+        }
+    ],
+    "id": {
+        "name": "id",
+        "type": "string"
+    },
+    "user": {
+        "name": "id",
+        "type": "string"
+    },
+    "name": {
+        "name": "id",
+        "type": "string"
+    },
+    "hostname": {
+        "name": "id",
+        "type": "string"
+    },
+    "clientVersion": {
+        "name": "Version of client",
+        "type": "string"
+    },
+    "updateAvailable": {
+        "name": "update available",
+        "type": "boolean"
+    },
+    "os": {
+        "name": "Operating System",
+        "type": "string"
+    },
+    "created": {
+        "ignored": true
+    },
+    "lastSeen": {
+        "name": "last seen",
+        "type": "moment"
+    },
+    "keyExpiryDisabled": {
+        "name": "key expiry disabled",
+        "type": "boolean"
+    },
+    "expires": {
+        "name": "expires",
+        "type": "moment"
+    },
+    "authorized": {
+        "name": "authorized",
+        "type": "boolean"
+    },
+    "isExternal": {
+        "name": "is external",
+        "type": "boolean"
+    },
+    "machineKey": {
+        "ignore": true
+    },
+    "nodeKey": {
+        "ignore": true
+    },
+    "blocksIncomingConnections": {
+        "name": "Block Incomming Connections",
+        "type": "boolean"
+    },
+    "enabledRoutes": {
+        "ignore": true
+    },
+    "advertisedRoutes": {
+        "ignore": true
+    },
+    "clientConnectivity": {
+        "ignore": true
+    }
+}

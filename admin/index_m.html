@@ -1,0 +1,366 @@
+<html>
+
+<head>
+
+	<!-- Load ioBroker scripts and styles-->
+	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+
+	<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
+	<script type="text/javascript" src="../../lib/js/materialize.js"></script>
+	<script type="text/javascript" src="../../lib/js/jquery-ui.min.js"></script>
+
+	<script type="text/javascript" src="../../js/translate.js"></script>
+	<script type="text/javascript" src="../../js/adapter-settings.js"></script>	
+
+	<!-- Load our own files -->
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script type="text/javascript" src="words.js"></script>
+	<script type="text/javascript" src="index_m.js"></script>
+
+
+	<style>
+		.m .tabs .tab a:hover {
+			border-bottom: 2px solid #46a0e9 !important;
+			font-weight: bold !important;
+		}
+
+		.m .tabs .myLinkBar a {
+			border-bottom: 0px solid #46a0e9 !important;
+			font-style: normal !important;
+			text-transform: none !important;
+			font-size: 16px;
+		}
+
+		.m .tabs .myLinkBar a:hover {
+			border-bottom: 0px solid #46a0e9 !important;
+			background: rgba(161, 161, 161, 0.26);
+			font-weight: normal !important;
+			text-transform: none !important;
+			font-size: 16px;
+		}
+
+		.fancytree-container {
+			background: transparent !important;
+			border-style: none !important;
+			font-size: 1rem !important;
+			font-family: "Segoe UI", Tahoma, Arial, "Courier New" !important;
+		}
+
+		.fancytree-title {
+			background: transparent !important;
+			height: 24px;
+		}
+
+		.fancytree-node:hover,
+		.fancytree-node:hover>.fancytree-title,
+		.fancytree-title:hover {
+			background: #64b5f6 !important;
+			color: white !important;
+			font-weight: bold !important;
+			cursor: pointer;
+		}
+
+		ul.fancytree-container ul {
+			padding: 0 0 0 18px !important;
+			margin: 0;
+		}
+
+		.fancytree-node>span.fancytree-checkbox {
+			background-position: 0 0;
+			background-image: url("./img/checkbox.svg");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node.fancytree-partsel>span.fancytree-checkbox {
+			background-position: 0 0;
+			background-image: url("./img/checkbox_intermediate.svg");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node.fancytree-partsel.fancytree-selected>span.fancytree-checkbox {
+			background-position: 0 0;
+			background-image: url("./img/checkbox_marked.svg");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node>span.fancytree-icon,
+		.fancytree-node>span.fancytree-icon:hover {
+			background-position: 0 0;
+			background-image: url("./img/state.png");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node.fancytree-folder>span.fancytree-icon {
+			background-position: 0 0;
+			background-image: url("./img/folder.png");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node.fancytree-folder>span.fancytree-expander {
+			background-position: 0 0;
+			background-image: url("./img/menu_right.svg");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-node.fancytree-expanded.fancytree-folder>span.fancytree-expander {
+			background-position: 0 0;
+			background-image: url("./img/menu_down.svg");
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-folder-title-id {
+			font-size: .9em;
+			min-width: 130px;
+		}
+
+		.fancytree-item-title-id {
+			min-width: 130px;
+		}
+
+		.fancytree-item-title-name {
+			width: auto;
+		}
+
+		.fancytree-node.fancytree-folder {
+			border-bottom: 0.5px solid #64b5f6;
+			margin-top: 20px;
+		}
+
+		.fancytree-node.fancytree-folder .fancytree-title {
+			font-size: 16px;
+			font-weight: 500;
+		}
+
+		.container_foldersTable {
+			height: 70%;
+		}
+
+		.container_mycommandsTable {
+			height: 70%;
+		}
+
+		/* Drag Item Layout */
+		.fancytree-drag-item-container {
+			display: flex;
+			align-items: center;
+			background: #64b5f6;
+			width: 250px;
+			height: 24px;
+			background: #64b5f6 !important;
+		}
+
+		.fancytree-drag-item-image {
+			width: 24px;
+			height: 24px;
+		}
+
+		.fancytree-drag-text {
+			color: white !important;
+			font-size: 0.8rem !important;
+			font-family: "Segoe UI", Tahoma, Arial, "Courier New" !important;
+			font-weight: bold !important;
+			margin-left: 6px;
+		}
+
+		/* all tables */
+		.m td {
+			text-align: center;
+		}
+
+		/* Hosts Table */
+		.values-input[data-name="ip"],
+		.values-input[data-name="port"],
+		.values-input[data-name="interval"],
+		.values-input[data-name="timeout"] {
+			text-align: center;
+		}
+
+		/* Folders Table */
+		.container_foldersTable .values-input[data-name="digits"],
+		.container_foldersTable td:first-child+td+td+td+td+td .select-wrapper>input,
+		.container_foldersTable td:first-child+td+td+td+td+td .dropdown-content.select-dropdown>li {
+			text-align: center;
+		}
+
+		/* Commands Table */
+		.container_mycommandsTable .values-input[data-name="unit"],
+		.container_mycommandsTable td:first-child+td+td+td+td+td+td .select-wrapper>input,
+		.container_mycommandsTable td:first-child+td+td+td+td+td+td .dropdown-content.select-dropdown>li {
+			text-align: center;
+		}
+
+		/* chips */
+		.m .chips.focus {
+			border-bottom: 1px solid #64b5f6;
+			box-shadow: 0 1px 0 0 #64b5f6;
+		}
+
+		.m .chip:focus {
+			outline: none;
+			background-color: #64b5f6;
+		}
+
+		.m .chips .input {
+			width: unset !important;
+		}
+
+		.container_blacklistDatapoints {
+			margin-top: 20px;
+		}
+
+		.blacklistDatapoints_header {
+			display: block;
+			background-color: #2196f3;
+			width: 100%;
+			color: #fff !important;
+			letter-spacing: .5px;
+			padding: .3rem;
+		}
+
+		/* Header section */
+		.help-link {
+			order: 3 !important;
+			width: auto !important;
+			display: flex !important;
+			align-items: center !important;
+		}
+
+		.help-link .btn-floating {
+			margin-top: 0 !important;
+		}
+
+		.card-stacked {
+			order: 1;
+		}
+
+		.logo {
+			width: 100px;
+			height: 100px;
+			padding: 12px !important;
+		}
+
+		/* Card Styles */
+		.card {
+			margin: 0 !important;
+			margin-top: 6px !important;
+		}
+
+		.card-content.fannytree {
+			padding: 0 24px !important;
+		}
+
+		.card-content.blacklistDatapoints {
+			padding: 16px 16px 4px 16px !important;
+		}
+
+		.card-content.blacklistDatapoints .card-title {
+			font-size: 20px !important;
+		}
+
+		.card-title {
+			color: #2196f3;
+			margin-bottom: 12px !important;
+		}
+
+		.my-card-subTitle {
+			font-size: 16px !important;
+			margin-top: 6px !important;
+			font-style: italic !important;
+			color: gray !important;
+		}
+
+		.my-card-title {
+			font-size: 24px !important;
+			font-weight: 300 !important;
+			color: #2196f3 !important;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="m adapter-container">
+		<div class="row">
+			<div id="tab_general" class="col s12 page">
+				<div class="col s12">
+					<div class="row">
+						<div class="col s12 m12 l12 card horizontal">
+							<div class="card-image">
+								<img class="logo" src="tailscale.png">
+							</div>
+							<div class="card-stacked">
+								<div class="card-content">
+									<div>
+										<div class="my-card-title" id="adapterTitle">Tailscale API</div>
+										<div class="my-card-subTitle translate">Tailscale API access</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<section>
+							<div class="col s12 m12 l12 card">
+								<div class="card-content">
+									<span class="card-title translate">Documentations</span>
+
+									<ul class="tabs" style="height: auto;">
+										<li class="tab myLinkBar col s6 l2"><a
+												href="https://github.com/Scrounger/ioBroker.tailscale/blob/master/README.md"
+												target="_blank" class="translate">lc_settings</a></li>
+										<li class="tab myLinkBar col s6 l2"><a
+												href="https://forum.iobroker.net/"
+												target="_blank" class="translate">lc_forum</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="col s12 m12 l12 card" style="padding-bottom: 20px;">
+								<div class="card-content">
+									<span class="card-title translate">Account configuration table</span>
+
+									<div class="col s12" id="accounts">
+										<div>
+											<a
+												class="btn-floating waves-effect waves-light blue table-button-add accountTable-button-add"><i
+													class="material-icons">add</i></a>
+											<span class="my-card-subTitle translate" style="margin-left: 10px;">Add user</span>
+										</div>												
+										<div class="table-values-div" style="margin-top: 10px;">
+											<table class="table-values" id="accountTable">
+												<thead>
+													<tr>
+														<th data-name="enabled" data-type="checkbox" checked="true"
+															data-default="true" style="width: 20px;"
+															data-style="width: 20px;" class="translate">enabled</th>
+														<th data-name="user" style="width: 25%" class="translate">User</th>
+														<th data-name="password" data-type="password" style="width: 25%"
+															class="translate">Password</th>
+														<th data-name="api" data-type="password" style="width: 25%" class="translate">API Key</th>
+														<th data-name="channelName" style="width: 25%" class="translate">Channel name</th>
+														<th data-name="interval" data-type="number" data-default="60"
+															style="width: 10%; text-align: center;" class="translate">pollingInterval</th>
+														<th data-buttons="delete up down" style="width: 60px"></th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>							
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
